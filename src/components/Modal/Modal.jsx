@@ -5,11 +5,10 @@ import css from 'components/Modal/Modal.module.css';
 
 const modalRoot  = document.querySelector('#modal-root');
 
-export class Modal extends Component {
+class Modal extends Component {
     static propTypes = {
-        largeImageURL: PropTypes.string.isRequired,
-        tags: PropTypes.string.isRequired,
         onClose: PropTypes.func.isRequired,
+        children: PropTypes.element,
     }
 
     componentDidMount(){
@@ -24,8 +23,9 @@ export class Modal extends Component {
         if (evt.target === evt.currentTarget) {
             this.props.onClose();
         }
-    };
 
+    };
+    
     handleCloseByEsc = evt => {
         if (evt.code === 'Escape') {
             this.props.onClose();
@@ -34,17 +34,19 @@ export class Modal extends Component {
 
 
     render() {
-        const { largeImageURL, tags } = this.props;
+        const {children} = this.props;
 
         return createPortal (
             <div className={css.Overlay} onClick={this.handleCloseByOverlay}>
                 <div className={css.Modal}>
-                    <img src={largeImageURL} alt={tags} />
+                    {children}
                 </div>
             </div>,
             modalRoot  
         );
     };
 };
+
+export default Modal;
 
 

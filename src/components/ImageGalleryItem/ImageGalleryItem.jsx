@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from 'prop-types';
 import css from 'components/ImageGalleryItem/ImageGalleryItem.module.css';
-import { Modal } from "components/Modal/Modal";
+import Modal from "components/Modal/Modal";
 
 
 export class ImageGalleryItem extends Component {
@@ -18,8 +18,8 @@ export class ImageGalleryItem extends Component {
     }
 
     togleModal = () => {
-        this.setState(prevState => ({ showModal: !prevState.togleModal }));
-    }
+        this.setState(prevState => ({ showModal: !prevState.showModal }));
+    };
 
     render() {
         const { image: { webformatURL, largeImageURL, tags } } = this.props;
@@ -28,18 +28,19 @@ export class ImageGalleryItem extends Component {
         return (
             <>
                 <li
+                    onClick={this.togleModal}
                     className={css.ImageGalleryItem}
-                    onClick={this.togleModal}>
-                    <img
-                        className={css.ImageGalleryItemImage}
-                        src={webformatURL}
-                        alt={tags} />
+                    >
+                        <img
+                            className={css.ImageGalleryItemImage}
+                            src={webformatURL}
+                            alt={tags}
+                        />
                 </li>
-                {showModal && <Modal
-                    largeImageURL={largeImageURL}
-                    tags={tags}
-                    onClose={this.togleModal}
-                />}
+                {showModal && (<Modal
+                    onClose={this.togleModal}>
+                    <img src={largeImageURL} alt={tags}/>
+                </Modal>)}
             </>
         );
     };
