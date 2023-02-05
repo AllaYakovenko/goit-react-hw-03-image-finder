@@ -12,7 +12,7 @@ export const fetchImages = async (searchQuery, searchPage = 1) => {
             q: searchQuery,
             page: searchPage,
             key: API_KEY,
-            per_page: 12,
+            per_page: 32,
         },
     });
 

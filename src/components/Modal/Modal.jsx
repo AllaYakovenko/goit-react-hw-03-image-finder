@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 import PropTypes from 'prop-types';
+import { createPortal } from 'react-dom';
 import css from 'components/Modal/Modal.module.css';
+
+const modalRoot  = document.querySelector('#modal-root');
 
 export class Modal extends Component {
     static propTypes = {
@@ -9,15 +12,15 @@ export class Modal extends Component {
         onClose: PropTypes.func.isRequired,
     }
 
-    componentDidMount() {
+    componentDidMount(){
         window.addEventListener('keydown', this.handleCloseByEsc);
     };
 
-    componentWillUnmount() {
+    componentWillUnmount(){
         window.removeEventListener('keydown', this.handleCloseByEsc);
     };
 
-    handleCloseByOverlay = evt => {
+    handleCloseByOverlay = (evt) => {
         if (evt.target === evt.currentTarget) {
             this.props.onClose();
         }
@@ -33,12 +36,13 @@ export class Modal extends Component {
     render() {
         const { largeImageURL, tags } = this.props;
 
-        return (
+        return createPortal (
             <div className={css.Overlay} onClick={this.handleCloseByOverlay}>
                 <div className={css.Modal}>
                     <img src={largeImageURL} alt={tags} />
                 </div>
-            </div>
+            </div>,
+            modalRoot  
         );
     };
 };
