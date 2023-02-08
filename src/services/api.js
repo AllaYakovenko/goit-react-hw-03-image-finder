@@ -6,22 +6,18 @@ const imagesAPI = axios.create({
 
 const API_KEY = '31760233-da36889e6feb9e4679dfb5488';
 
-export const fetchImages = async (searchQuery, searchPage = 1) => {
+export async function fetchImages(query, page = 1){
     const response = await imagesAPI.get('/?image_type=photo&orientation=horizontal', {
         params: {
-            q: searchQuery,
-            page: searchPage,
+            q: query,
+            page: page,
             key: API_KEY,
-            per_page: 32,
+            per_page: 12,
         },
     });
 
-    return response.data.hits;
+    return response.data;
 };
 
-const api = {
-    fetchImages,
-}
 
-export default api;
-
+export default fetchImages;

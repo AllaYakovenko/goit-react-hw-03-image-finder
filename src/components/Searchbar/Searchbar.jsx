@@ -21,7 +21,6 @@ class Searchbar extends Component {
     handleSubmit = e => {
         e.preventDefault();
 
-
         // trim зліва і справа прибирає пробіли у рядків
         if(this.state.searchQuery.trim() === ''){
            return toast.info('Введіть назву зображення');
